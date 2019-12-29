@@ -8,12 +8,17 @@ GPIO.setwarnings(False)
 
 lbl_bg_color = 'yellow'
 lbl_txt_color = 'blue'
+toggle_btn_color_stopped = 'green'
+toggle_btn_color_stopped_text = 'blue'
+toggle_btn_color_running = 'red'
+toggle_btn_color_running_text = 'white'
 
 header_height = 50
 bottom_height = 50
 center_border = 20
 number_of_tubes = 6
-tube_row_height = 50
+tube_row_height = 45
+
 final_spacer = int(round((tube_row_height / 8)))
 total_rows_plus_final = int(
     round((number_of_tubes * ((tube_row_height) + 1)) + final_spacer + header_height + bottom_height + center_border))
@@ -118,6 +123,12 @@ start_switches = [
     {'pin': 21, 'name': "Tube 6", 'stopwatch': sw6},
 ]
 
+
+def update_colors(sw):
+    if sw.getRunning():
+        sw1.toggle_button.configure(bg=toggle_btn_color_running, fg=toggle_btn_color_running_text)
+    else:
+        sw1.toggle_button.configure(bg=toggle_btn_color_stopped, fg=toggle_btn_color_stopped_text)
 
 def getSWfromChannel(pin):
     channel = start_switch.index(pin)
