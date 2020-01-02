@@ -9,7 +9,11 @@ class App():
     apps = []
 
     def __init__(self, root, **kwargs):
-        self.stopwatch_digit_size = 20
+        self.toggle_btn_color_stopped = 'green'
+        self.toggle_btn_color_stopped_text = 'blue'
+        self.toggle_btn_color_running = 'red'
+        self.toggle_btn_color_running_text = 'white'
+        self.stopwatch_digit_size = 22
         self.root = root
         self.name = 'Stopwatch'
         for key, value in kwargs.items():
@@ -76,21 +80,22 @@ class App():
                                       width=40)
         self.tgtTimeEntry_S.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size - 2, "bold"),
                                       width=40)
-        self.toggle_button.configure(text="START", bg="green", fg="black", command=self.toggle,
+        self.toggle_button.configure(text="START", bg=self.toggle_btn_color_stopped,
+                                     fg=self.toggle_btn_color_stopped_text, command=self.toggle,
                                      font=("default", 10, "bold"))
         self.reset_button.configure(text="RESET", bg="orange", fg="black", command=self.reset,
                                     font=("default", 10, "bold"))
         self.quitButton.configure(text="Quit", bg="red", fg="white", command=self.quit(), font=("default", 10, "bold"))
 
-        self.name_label.place(x=10, y=10, width=100, height=30)
-        self.clock_frame.place(x=120, y=10, width=200, height=30)
-        self.tgtTimeEntry_D.place(x=330, y=10, width=40, height=30)
-        self.tgtTimeEntry_H.place(x=380, y=10, width=40, height=30)
-        self.tgtTimeEntry_M.place(x=430, y=10, width=40, height=30)
-        self.tgtTimeEntry_S.place(x=480, y=10, width=40, height=30)
-        self.timeRemaining_label.place(x=530, y=10, width=200, height=30)
-        self.toggle_button.place(x=740, y=10, width=100, height=30)
-        self.reset_button.place(x=850, y=10, width=100, height=30)
+        self.name_label.place(x=10, y=10, width=100, height=33)
+        self.clock_frame.place(x=120, y=10, width=200, height=33)
+        self.tgtTimeEntry_D.place(x=330, y=10, width=40, height=33)
+        self.tgtTimeEntry_H.place(x=380, y=10, width=40, height=33)
+        self.tgtTimeEntry_M.place(x=430, y=10, width=40, height=33)
+        self.tgtTimeEntry_S.place(x=480, y=10, width=40, height=33)
+        self.timeRemaining_label.place(x=530, y=10, width=200, height=33)
+        self.toggle_button.place(x=740, y=10, width=100, height=33)
+        self.reset_button.place(x=850, y=10, width=100, height=33)
         print("finished setup, about to run self.updateTimer")
         self.updateTimer()
 
@@ -139,19 +144,24 @@ class App():
     def start(self):
         self.stopwatch.start()  # let it do the logical work
         # do your GUI updates
-        self.toggle_button.configure(text="Stop")
+        self.toggle_button.configure(text="Stop", bg=self.toggle_btn_color_running,
+                                     fg=self.toggle_btn_color_running_text)
         self.updateTimer()
 
     def stop(self):
         self.stopwatch.stop()  # Logic and math here
         # Do GUI updates for stop
-        self.toggle_button.configure(text="Start")
+        self.toggle_button.configure(text="Start", bg=self.toggle_btn_color_stopped,
+                                     fg=self.toggle_btn_color_stopped_text)
         self.updateTimer()
 
     def reset(self):
-        self.stopwatch.reset()  # Logic again handled in the Stopwatch class
-        # Clean up GUI components
+        now = time.time()
+        self.stopwatch.reset()  # Logic handled in the Stopwatch class
+        remainingTime = self.stopwatch.display_remainingTime(now=now)
+        # Update GUI components
         self.clock_frame.configure(text=self.stopwatch.display_time())
+        self.timeRemaining_label.configure(text=remainingTime)
 
     def updateTimer(self):
         now = time.time()
@@ -160,7 +170,7 @@ class App():
             remainingTime = self.stopwatch.display_remainingTime(now=now)
             self.clock_frame.configure(text=duration)
             self.timeRemaining_label.configure(text=remainingTime)
-            self.frame.after(500, self.updateTimer)
+            self.frame.after(200, self.updateTimer)
 
     def getRunning(self):
         return self.stopwatch.running

@@ -1,6 +1,5 @@
 import time
 
-
 class Stopwatch:
     stopwatches = []
 
@@ -57,6 +56,10 @@ class Stopwatch:
         # Implement your watch reset logic here
         self.duration = 0
         self.start_time = time.time()
+        if not self.getRunning():
+            self.remainingTestTime = self.tgtTime
+        else:
+            self.remainingTestTime = self.tgtTime - self.getCurrentDuration()
 
     def display_time(self):
         # Return the time to display on the GUI

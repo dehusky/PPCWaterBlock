@@ -1,4 +1,4 @@
 ﻿#!/usr/bin/python3
 
-sudo python3 WaterBlockTimer_multiFrame_Grid.py &
+sudo python3 WaterBlockTimer_App.py &
 exit 0

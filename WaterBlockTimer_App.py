@@ -1,10 +1,20 @@
+from tkinter import Menu
+
 import RPi.GPIO as GPIO
 
-from WaterBlockTest_tkinter import *
+from WaterBlockTest_aStopWatchFrame import *
 
 # setup GPIO
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
+
+root = Tk()
+background_colour = 'yellow'
+
+
+def onExit():
+    sys.exit()
+
 
 lbl_bg_color = 'yellow'
 lbl_txt_color = 'blue'
@@ -13,29 +23,34 @@ toggle_btn_color_stopped_text = 'blue'
 toggle_btn_color_running = 'red'
 toggle_btn_color_running_text = 'white'
 
-header_height = 50
-bottom_height = 50
+header_height = 60
+bottom_height = 60
 center_border = 20
 number_of_tubes = 6
-tube_row_height = 45
+tube_row_height = 60
 
 final_spacer = int(round((tube_row_height / 8)))
 total_rows_plus_final = int(
     round((number_of_tubes * ((tube_row_height) + 1)) + final_spacer + header_height + bottom_height + center_border))
 
-window_width = 1000
+window_width = 1024
 window_height = total_rows_plus_final
 
-root = Tk()
 root.title('Water Block Tester')
 root.geometry('{}x{}'.format(window_width, window_height))
+
+menubar = Menu(root)
+root.config(menu=menubar)
+filemenu = Menu(menubar)
+menubar.add_cascade(label='File', menu=filemenu)
+filemenu.add_command(label='Exit', command=onExit)
 
 ## Logo Image
 logo_image = PhotoImage(file="Belden_PPC_logo-standard.png").subsample(15, 15)
 
 # create the main containers
 top_frame = Frame(root, bg='white', width=root.winfo_reqwidth() - 10, height=header_height, padx=5, pady=5)
-center_frame = Frame(root, bg='blue', width=root.winfo_reqwidth() - 10, height=50, borderwidth=(center_border / 2),
+center_frame = Frame(root, bg='blue', width=root.winfo_reqwidth() - 10, height=65, borderwidth=(center_border / 2),
                      padx=0, pady=0)
 btm_frame = Frame(root, bg='blue', width=root.winfo_reqwidth() - 10, height=bottom_height, borderwidth=5, padx=5,
                   pady=5)
@@ -60,15 +75,17 @@ title_label.grid(row=0, sticky='e')
 header_logo_image.grid(row=0, sticky='w')
 
 # create header row
-ctr_row0 = Frame(center_frame, bg='yellow', width=root.winfo_reqwidth() - 10, height=28, padx=3, pady=3)
+ctr_row0 = Frame(center_frame, bg=background_colour, width=root.winfo_reqwidth() - 10, height=33, padx=3, pady=3)
 # create the individual frames for the rows to hold the stop watch objects
-ctr_row1 = Frame(center_frame, bg='yellow', width=root.winfo_reqwidth() - 10, height=tube_row_height, padx=3, pady=3)
-ctr_row2 = Frame(center_frame, bg='yellow', width=980, height=tube_row_height, padx=3, pady=3)
-ctr_row3 = Frame(center_frame, bg='yellow', width=980, height=tube_row_height, padx=3, pady=3)
-ctr_row4 = Frame(center_frame, bg='yellow', width=980, height=tube_row_height, padx=3, pady=3)
-ctr_row5 = Frame(center_frame, bg='yellow', width=980, height=tube_row_height, padx=3, pady=3)
-ctr_row6 = Frame(center_frame, bg='yellow', width=980, height=tube_row_height, padx=3, pady=3)
-ctr_row_last = Frame(center_frame, bg='yellow', width=root.winfo_reqwidth(), height=tube_row_height / 4, padx=2, pady=2)
+ctr_row1 = Frame(center_frame, bg=background_colour, width=root.winfo_reqwidth() - 10, height=tube_row_height, padx=3,
+                 pady=3)
+ctr_row2 = Frame(center_frame, bg=background_colour, width=980, height=tube_row_height, padx=3, pady=3)
+ctr_row3 = Frame(center_frame, bg=background_colour, width=980, height=tube_row_height, padx=3, pady=3)
+ctr_row4 = Frame(center_frame, bg=background_colour, width=980, height=tube_row_height, padx=3, pady=3)
+ctr_row5 = Frame(center_frame, bg=background_colour, width=980, height=tube_row_height, padx=3, pady=3)
+ctr_row6 = Frame(center_frame, bg=background_colour, width=980, height=tube_row_height, padx=3, pady=3)
+ctr_row_last = Frame(center_frame, bg=background_colour, width=root.winfo_reqwidth(), height=tube_row_height / 4,
+                     padx=2, pady=2)
 
 # place the rows in the center grid
 ctr_row0.grid(row=0, column=0, sticky='nsew')
@@ -103,13 +120,13 @@ lbl_remaining = Label(ctr_row0, text='Remaining Time', bg=lbl_bg_color, fg=lbl_t
                       anchor="center")
 
 # Place the header labels
-lbl_name.place(x=10, y=2, width=100, height=28)
-lbl_elapsed.place(x=120, y=2, width=200, height=28)
-lbl_days.place(x=330, y=0, width=40, height=30)
-lbl_hrs.place(x=380, y=0, width=40, height=30)
-lbl_mins.place(x=430, y=0, width=40, height=30)
-lbl_secs.place(x=480, y=0, width=40, height=30)
-lbl_remaining.place(x=530, y=2, width=200, height=28)
+lbl_name.place(x=10, y=7, width=100, height=28)
+lbl_elapsed.place(x=120, y=5, width=200, height=28)
+lbl_days.place(x=330, y=5, width=40, height=30)
+lbl_hrs.place(x=380, y=5, width=40, height=30)
+lbl_mins.place(x=430, y=5, width=40, height=30)
+lbl_secs.place(x=480, y=5, width=40, height=30)
+lbl_remaining.place(x=530, y=7, width=200, height=28)
 
 # setup GPIO hardware switches
 start_switch = [0, 8, 7, 12, 16, 20, 21]  # switch pins starting at switch[1] (0 is place holder)
@@ -122,13 +139,6 @@ start_switches = [
     {'pin': 20, 'name': "Tube 5", 'stopwatch': sw5},
     {'pin': 21, 'name': "Tube 6", 'stopwatch': sw6},
 ]
-
-
-def update_colors(sw):
-    if sw.getRunning():
-        sw1.toggle_button.configure(bg=toggle_btn_color_running, fg=toggle_btn_color_running_text)
-    else:
-        sw1.toggle_button.configure(bg=toggle_btn_color_stopped, fg=toggle_btn_color_stopped_text)
 
 def getSWfromChannel(pin):
     channel = start_switch.index(pin)
@@ -154,7 +164,6 @@ def getSWfromChannel(pin):
 # Handle GPIO Stop sensor
 def switchPin_callback(channel):
     print('edge detection on channel %s' % channel)
-
 
 for switch in start_switch:
     GPIO.setup(switch, GPIO.IN, pull_up_down=GPIO.PUD_UP)
