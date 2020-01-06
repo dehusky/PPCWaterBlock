@@ -67,25 +67,25 @@ class App():
     def setup(self, sw):
         # Create all of the GUI components and build all the visuals
         print("setup")
-        self.name_label.configure(text=sw.name, font=("default", 10, "bold"), bg="blue", fg="white")
+        self.name_label.configure(text=sw.name, font=("default", 15, "bold"), bg="blue", fg="white")
         self.clock_frame.configure(text="00:00:00", bg="white", fg="blue",
                                    font=("default", self.stopwatch_digit_size, "bold"), width=500, height=200)
         self.timeRemaining_label.configure(text="00:00:00", bg="white", fg="blue",
                                            font=("default", self.stopwatch_digit_size, "bold"), width=500, height=200)
-        self.tgtTimeEntry_D.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size, "bold"),
+        self.tgtTimeEntry_D.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size - 4, "bold"),
                                       width=40)
-        self.tgtTimeEntry_H.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size, "bold"),
+        self.tgtTimeEntry_H.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size - 4, "bold"),
                                       width=40)
-        self.tgtTimeEntry_M.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size - 2, "bold"),
+        self.tgtTimeEntry_M.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size - 4, "bold"),
                                       width=40)
-        self.tgtTimeEntry_S.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size - 2, "bold"),
+        self.tgtTimeEntry_S.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size - 4, "bold"),
                                       width=40)
         self.toggle_button.configure(text="START", bg=self.toggle_btn_color_stopped,
                                      fg=self.toggle_btn_color_stopped_text, command=self.toggle,
-                                     font=("default", 10, "bold"))
+                                     font=("default", 12, "bold"))
         self.reset_button.configure(text="RESET", bg="orange", fg="black", command=self.reset,
-                                    font=("default", 10, "bold"))
-        self.quitButton.configure(text="Quit", bg="red", fg="white", command=self.quit(), font=("default", 10, "bold"))
+                                    font=("default", 12, "bold"))
+        self.quitButton.configure(text="Quit", bg="red", fg="white", command=self.quit(), font=("default", 15, "bold"))
 
         self.name_label.place(x=10, y=10, width=100, height=33)
         self.clock_frame.place(x=120, y=10, width=200, height=33)
