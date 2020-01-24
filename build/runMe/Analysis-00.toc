@@ -1,6 +1,6 @@
-(['/home/pi/Documents/PPC_WB_Tester/WaterBlockTimer_App.py'],
+(['WaterBlockTimer_App.py'],
  ['/home/pi/Documents/PPC_WB_Tester', '/home/pi/Documents/PPC_WB_Tester'],
- ['codecs'],
+ ['tkinter', 'codecs'],
  [],
  [],
  [],
