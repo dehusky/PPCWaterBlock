@@ -1,7 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 import time
 from tkinter import *
 
+from NumpadEntry import NumpadEntry
 from stopwatch import Stopwatch
 
 
@@ -31,20 +32,20 @@ class App():
         self.timeRemaining_label = Label(self.root)
         self.frame = Frame(self.root)
 
-        self.tgt_D = '1'
-        self.tgt_H = '0'
-        self.tgt_M = '0'
-        self.tgt_S = '0'
+        self.textEntryTgt_D = StringVar()
+        self.textEntryTgt_H = StringVar()
+        self.textEntryTgt_M = StringVar()
+        self.textEntryTgt_S = StringVar()
 
-        self.tgtTimeEntry_D = Entry(self.root)
-        self.tgtTimeEntry_H = Entry(self.root)
-        self.tgtTimeEntry_M = Entry(self.root)
-        self.tgtTimeEntry_S = Entry(self.root)
+        self.textEntryTgt_D.set('2')
+        self.textEntryTgt_H.set('1')
+        self.textEntryTgt_M.set('1')
+        self.textEntryTgt_S.set('1')
 
-        self.tgtTimeEntry_D.insert(2, self.tgt_D)
-        self.tgtTimeEntry_H.insert(2, self.tgt_H)
-        self.tgtTimeEntry_M.insert(2, self.tgt_M)
-        self.tgtTimeEntry_S.insert(2, self.tgt_S)
+        self.tgtTimeEntry_D = NumpadEntry(self.root, textvariable=self.textEntryTgt_D)
+        self.tgtTimeEntry_H = NumpadEntry(self.root, textvariable=self.textEntryTgt_H)
+        self.tgtTimeEntry_M = NumpadEntry(self.root, textvariable=self.textEntryTgt_M)
+        self.tgtTimeEntry_S = NumpadEntry(self.root, textvariable=self.textEntryTgt_S)
 
         self.tgtTimeEntry_D.bind("<Key>", self.callback_updateTgt)
         self.tgtTimeEntry_H.bind('<Key>', self.callback_updateTgt)
@@ -102,8 +103,13 @@ class App():
         print("finished self.updateTimer")
 
     def callback_updateTgt(self, e):
+        entry1_ent.selection_range(0, END)
         try:
             self.tgt_D = int(self.tgtTimeEntry_D.get())
+            print("in callback_update")
+            print(self.tgt_D)
+            if self.tgt_D < 0:
+                self.tgtTimeEntry_D.insert(2, '0')
         except:
             if not type(self.tgt_D) is int:
                 self.tgtTimeEntry_D.insert(2, '0')
