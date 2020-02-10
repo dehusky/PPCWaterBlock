@@ -25,12 +25,18 @@ class NumpadEntry(Entry):
 class numPad(simpledialog.Dialog):
     def __init__(self, master=None, textVariable=None):
         self.top = Toplevel(master=master)
+        self.top.attributes("-topmost", True)
+        w = 228
+        h = 325
+        x = 550
+        y = 180
+        self.top.geometry('%dx%d+%d+%d' % (w, h, x, y))
         self.top.protocol("WM_DELETE_WINDOW", self.ok)
         self.createWidgets()
         self.master = master
 
     def createWidgets(self):
-        btn_list = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', 'Close', 'Del']
+        btn_list = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', 'Enter', 'Del']
         # create and position all buttons with a for-loop
         # r, c used for row, column grid values
         r = 1
@@ -42,7 +48,7 @@ class numPad(simpledialog.Dialog):
             # partial takes care of function and argument
             cmd = lambda x=label: self.click(x)
             # create the button
-            cur = Button(self.top, text=label, width=10, height=5, command=cmd)
+            cur = Button(self.top, text=label, width=6, height=4, command=cmd)
             btn.append(cur)
             # position the button
             btn[-1].grid(row=r, column=c)
@@ -60,7 +66,7 @@ class numPad(simpledialog.Dialog):
             currentText = self.master.get()
             self.master.delete(0, END)
             self.master.insert(0, currentText[:-1])
-        elif label == 'Close':
+        elif label == 'Enter':
             self.ok()
         else:
             currentText = self.master.get()
@@ -68,6 +74,47 @@ class numPad(simpledialog.Dialog):
             self.master.insert(0, currentText + label)
 
     def ok(self):
+        currentText = self.master.get()
+        print("currentText")
+        print(currentText)
+        if currentText == '':
+            self.master.insert(0, '0')
+        elif type(int(currentText)) != int:
+            print("currenttext not an int")
+            self.master.delete(0, END)
+            self.master.insert(0, '0')
+        elif int(currentText) < 0:
+            print("currentText < 0")
+            self.master.insert(0, '0')
+        else:
+            masterStr = str(self.master)
+            value = int(currentText)
+            # check Days
+            if masterStr == ".!frame2.!frame2.!numpadentry" or masterStr == ".!frame2.!frame3.!numpadentry" or masterStr == ".!frame2.!frame4.!numpadentry" or masterStr == ".!frame2.!frame5.!numpadentry":
+                if value > 7:
+                    self.master.delete(0, END)
+                    self.master.insert(0, '7')
+                    print('days over range')
+
+            # check hours
+            if masterStr == ".!frame2.!frame2.!numpadentry2" or masterStr == ".!frame2.!frame3.!numpadentry2" or masterStr == ".!frame2.!frame4.!numpadentry2" or masterStr == ".!frame2.!frame5.!numpadentry2":
+                if value > 23:
+                    self.master.delete(0, END)
+                    self.master.insert(0, '23')
+                    print('hours over range')
+            # check mins
+            if masterStr == ".!frame2.!frame2.!numpadentry3" or masterStr == ".!frame2.!frame3.!numpadentry3" or masterStr == ".!frame2.!frame4.!numpadentry3" or masterStr == ".!frame2.!frame5.!numpadentry3":
+                if value > 59:
+                    self.master.delete(0, END)
+                    self.master.insert(0, '59')
+                    print('mins over range')
+            # check secs
+            if masterStr == ".!frame2.!frame2.!numpadentry4" or masterStr == ".!frame2.!frame3.!numpadentry4" or masterStr == ".!frame2.!frame4.!numpadentry4" or masterStr == ".!frame2.!frame5.!numpadentry4":
+                if value > 59:
+                    self.master.delete(0, END)
+                    self.master.insert(0, '59')
+                    print('seconds over range')
+
         self.top.destroy()
         self.top.master.focus()
 

@@ -8,74 +8,64 @@ class Stopwatch:
         self.stopwatches.append(name)
         self.name = name
         self.start_time = 0
+        self.stopTime = self.start_time
         self.running = False
-        self.duration = 0
+        self.currentDuration = 0
         self.tgtTime = 1 * 24 * 60 * 60  # 1 day
-        self.states = ["Not Started", "Running", "Stopped", "Failed", "Passed"]
-        self.testStatus = 0  # "Not Started",
-        self.remainingTestTime = self.tgtTime - self.getCurrentDuration()
+        self.states = ["Ready", "Running", "Paused", "Passed", "Failed"]
+        self.testStatus = 0  # "Ready",
+        self.remainingTestTime = self.tgtTime - self.currentDuration
 
-    def getName(self):
-        return str(self.name)
+    def start(self):
+        print("Stopwatch>Start")
+        # Implement your starting of the timer code here
+        self.start_time = time.time()
+        self.running = True
+        self.testStatus = 1  # running
 
-    def getCurrentDuration(self, now=time.time()):
-        duration = self.duration
-        if self.running:
-            duration = duration + (now - self.start_time)
+    def stop(self):
+        print("Stopwatch>Stop")
+        now = time.time()
+        # Implement your stop timer logic
+        self.currentDuration = self.currentDuration + (now - self.start_time)
+        self.running = False
+        self.testStatus = 2  # paused
+        self.stopTime = now
+
+    def reset(self):
+        # Implement your watch reset logic here
+        self.currentDuration = 0
+        self.start_time = time.time()
+        if not self.running:
+            self.remainingTestTime = self.tgtTime
+            self.testStatus = 0  # ready
+        else:
+            self.remainingTestTime = self.tgtTime - self.getCurrentDuration()
+            self.testStatus = 1  # running
+
+    def getCurrentDuration(self, gcd_now=time.time()):
+        duration = self.currentDuration
+        if self.running == True:
+            duration = duration + (gcd_now - self.start_time)
         return duration
 
-    def getTargetTime(self):
-        return self.tgtTime
-
-    def setTargetTime(self, secs):
-        self.tgtTime = secs
-        print("stopwatch tgtTime: " + str(self.tgtTime))
-
-    def getRemainingTestTime(self, now=time.time()):
+    def getRemainingTestTime(self, grtt_now=time.time()):
         tgt = self.getTargetTime()
-        dur = self.getCurrentDuration(now=now)
+        dur = self.getCurrentDuration(gcd_now=grtt_now)
         remaining = tgt - dur
         self.remainingTestTime = remaining
         return remaining
 
-    def getRunning(self):
-        return self.running
-
-    def start(self):
-        # Implement your starting of the timer code here
-        self.start_time = time.time()
-        self.running = True
-
-    def stop(self):
-        print("Stopwatch>Stop")
-        # Implement your stop timer logic
-        self.duration = self.duration + (time.time() - self.start_time)
-        self.running = False
-
-    def reset(self):
-        # Implement your watch reset logic here
-        self.duration = 0
-        self.start_time = time.time()
-        if not self.getRunning():
-            self.remainingTestTime = self.tgtTime
-        else:
-            self.remainingTestTime = self.tgtTime - self.getCurrentDuration()
-
-    def display_time(self):
-        # Return the time to display on the GUI
-        now = time.time()
-        if not self.running:
-            self.startTime = now
-        elapsed = self.duration + (time.time() - self.start_time)
+    def display_elapsedTime(self, dt_now=time.time()):
+        elapsed = self.getCurrentDuration(gcd_now=dt_now)
         display = self.sec2time(elapsed, 0)
         return display
 
-    def display_remainingTime(self, now=time.time()):
-        now = now
-        remainingTime = self.getRemainingTestTime(now=now)
+    def display_remainingTime(self, drt_now=time.time()):
+        remainingTime = self.getRemainingTestTime(grtt_now=drt_now)
         if remainingTime < 0:
             remainingTime = 0
-            self.testStatus = "Passed"
+            self.testStatus = 4  # passed
         display = self.sec2time(remainingTime, 0)
         return display
 
@@ -89,3 +79,17 @@ class Stopwatch:
         # if n_msec > 0:
         pattern = '%%02d:%%02d:%%0%d.%df' % (n_msec + 2, n_msec)
         return ('%d:' + pattern) % (d, h, m, s)
+
+    def setTargetTime(self, secs):
+        self.tgtTime = secs
+        print("stopwatch tgtTime: " + str(self.tgtTime))
+
+    def getTargetTime(self):
+        return self.tgtTime
+
+    def getStatus(self):
+        status = self.testStatus
+        return status
+
+    def getName(self):
+        return str(self.name)

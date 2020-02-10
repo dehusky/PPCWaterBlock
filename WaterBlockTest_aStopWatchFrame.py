@@ -10,6 +10,7 @@ class App():
     apps = []
 
     def __init__(self, root, **kwargs):
+        self.now = time.time()
         self.toggle_btn_color_stopped = 'green'
         self.toggle_btn_color_stopped_text = 'blue'
         self.toggle_btn_color_running = 'red'
@@ -22,14 +23,15 @@ class App():
                 self.name = value
         self.apps.append(self)
         self.stopwatch = Stopwatch(name=self.name)
-        self.currentTestTime = self.stopwatch.getCurrentDuration()
-        self.remainingTestTime = self.stopwatch.getRemainingTestTime()
-        self.testStatus = "Running"  # "Running", "Passed", "Failed"
+        self.currentTestTime = self.stopwatch.getCurrentDuration(self.now)
+        self.remainingTestTime = self.stopwatch.getRemainingTestTime(self.now)
+        self.testStatus = self.stopwatch.getStatus()  # "0:Ready, "1:Running", "2:Paused", "3:Passed", "4:Failed"
 
         # GUI
         self.name_label = Label(self.root)
         self.clock_frame = Label(self.root)
         self.timeRemaining_label = Label(self.root)
+        self.testStatus_label = Label(self.root)
         self.frame = Frame(self.root)
 
         self.textEntryTgt_D = StringVar()
@@ -37,10 +39,10 @@ class App():
         self.textEntryTgt_M = StringVar()
         self.textEntryTgt_S = StringVar()
 
-        self.textEntryTgt_D.set('2')
+        self.textEntryTgt_D.set('0')
         self.textEntryTgt_H.set('1')
-        self.textEntryTgt_M.set('1')
-        self.textEntryTgt_S.set('1')
+        self.textEntryTgt_M.set('0')
+        self.textEntryTgt_S.set('0')
 
         self.tgtTimeEntry_D = NumpadEntry(self.root, textvariable=self.textEntryTgt_D)
         self.tgtTimeEntry_H = NumpadEntry(self.root, textvariable=self.textEntryTgt_H)
@@ -86,6 +88,8 @@ class App():
                                      font=("default", 12, "bold"))
         self.reset_button.configure(text="RESET", bg="orange", fg="black", command=self.reset,
                                     font=("default", 12, "bold"))
+        self.testStatus_label.configure(text="9", bg="white", fg="blue",
+                                        font=("default", self.stopwatch_digit_size, "bold"), width=500, height=200)
         self.quitButton.configure(text="Quit", bg="red", fg="white", command=self.quit(), font=("default", 15, "bold"))
 
         self.name_label.place(x=10, y=10, width=100, height=33)
@@ -97,13 +101,12 @@ class App():
         self.timeRemaining_label.place(x=530, y=10, width=200, height=33)
         self.toggle_button.place(x=740, y=10, width=100, height=33)
         self.reset_button.place(x=850, y=10, width=100, height=33)
+        self.testStatus_label.place(x=950, y=10, width=30, height=33)
         print("finished setup, about to run self.updateTimer")
         self.updateTimer()
-
         print("finished self.updateTimer")
 
     def callback_updateTgt(self, e):
-        entry1_ent.selection_range(0, END)
         try:
             self.tgt_D = int(self.tgtTimeEntry_D.get())
             print("in callback_update")
@@ -142,7 +145,7 @@ class App():
         return display
 
     def toggle(self):
-        if self.stopwatch.getRunning():
+        if self.stopwatch.running:
             self.stop()
         else:
             self.start()
@@ -164,19 +167,20 @@ class App():
     def reset(self):
         now = time.time()
         self.stopwatch.reset()  # Logic handled in the Stopwatch class
-        remainingTime = self.stopwatch.display_remainingTime(now=now)
+        remainingTime = self.stopwatch.display_remainingTime(drt_now=now)
         # Update GUI components
-        self.clock_frame.configure(text=self.stopwatch.display_time())
+        self.clock_frame.configure(text=self.stopwatch.display_elapsedTime())
         self.timeRemaining_label.configure(text=remainingTime)
 
     def updateTimer(self):
         now = time.time()
+        self.testStatus_label.configure(text=self.stopwatch.testStatus)
         if self.stopwatch.running:
-            duration = self.stopwatch.display_time()
-            remainingTime = self.stopwatch.display_remainingTime(now=now)
-            self.clock_frame.configure(text=duration)
-            self.timeRemaining_label.configure(text=remainingTime)
-            self.frame.after(200, self.updateTimer)
+            self.clock_frame.configure(text=self.stopwatch.display_elapsedTime(now))
+            self.timeRemaining_label.configure(text=self.stopwatch.display_remainingTime(now))
+            self.frame.after(1000, self.updateTimer)
+        else:
+            self.frame.after(1000, self.updateTimer)
 
     def getRunning(self):
         return self.stopwatch.running

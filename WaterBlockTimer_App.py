@@ -11,11 +11,10 @@ GPIO.setwarnings(False)
 root = Tk()
 background_colour = 'yellow'
 
-
 def onExit():
     sys.exit()
 
-
+fullscreen = False
 lbl_bg_color = 'yellow'
 lbl_txt_color = 'blue'
 toggle_btn_color_stopped = 'green'
@@ -38,7 +37,7 @@ window_height = total_rows_plus_final
 
 root.title('Water Block Tester')
 root.geometry('{}x{}'.format(window_width, window_height))
-root.attributes("-fullscreen", True)
+root.attributes("-fullscreen", fullscreen)
 
 
 def aboutInfo():
