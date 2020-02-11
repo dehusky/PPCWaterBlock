@@ -16,6 +16,12 @@ class App():
         self.toggle_btn_color_running = 'red'
         self.toggle_btn_color_running_text = 'white'
         self.stopwatch_digit_size = 22
+        self.testColor_ready = 'light-blue'
+        self.testColor_running = 'blue'
+        self.testColor_paused = 'orange'
+        self.testColor_passed = 'green'
+        self.testColor_failed = 'red'
+        self.testColor = ['lightblue', 'blue', 'orange', 'green', 'red']
         self.root = root
         self.name = 'Stopwatch'
         for key, value in kwargs.items():
@@ -25,7 +31,8 @@ class App():
         self.stopwatch = Stopwatch(name=self.name)
         self.currentTestTime = self.stopwatch.getCurrentDuration(self.now)
         self.remainingTestTime = self.stopwatch.getRemainingTestTime(self.now)
-        self.testStatus = self.stopwatch.getStatus()  # "0:Ready, "1:Running", "2:Paused", "3:Passed", "4:Failed"
+        self.testStatus = self.stopwatch.getStatusText()  # "0:Ready, "1:Running", "2:Paused", "3:Passed", "4:Failed"
+        print(self.testStatus)
 
         # GUI
         self.name_label = Label(self.root)
@@ -88,8 +95,10 @@ class App():
                                      font=("default", 12, "bold"))
         self.reset_button.configure(text="RESET", bg="orange", fg="black", command=self.reset,
                                     font=("default", 12, "bold"))
-        self.testStatus_label.configure(text="9", bg="white", fg="blue",
-                                        font=("default", self.stopwatch_digit_size, "bold"), width=500, height=200)
+        self.testStatus_label.configure(text=self.testStatus, bg="yellow",
+                                        fg=self.testColor[self.stopwatch.getStatus()],
+                                        font=("default", self.stopwatch_digit_size - 2, "bold"), width=980, height=180,
+                                        anchor="w")
         self.quitButton.configure(text="Quit", bg="red", fg="white", command=self.quit(), font=("default", 15, "bold"))
 
         self.name_label.place(x=10, y=10, width=100, height=33)
@@ -101,7 +110,7 @@ class App():
         self.timeRemaining_label.place(x=530, y=10, width=200, height=33)
         self.toggle_button.place(x=740, y=10, width=100, height=33)
         self.reset_button.place(x=850, y=10, width=100, height=33)
-        self.testStatus_label.place(x=950, y=10, width=30, height=33)
+        self.testStatus_label.place(x=10, y=45, width=1000, height=33)
         print("finished setup, about to run self.updateTimer")
         self.updateTimer()
         print("finished self.updateTimer")
@@ -174,7 +183,8 @@ class App():
 
     def updateTimer(self):
         now = time.time()
-        self.testStatus_label.configure(text=self.stopwatch.testStatus)
+        self.testStatus_label.configure(text=self.stopwatch.getStatusText(),
+                                        fg=self.testColor[self.stopwatch.getStatus()])
         if self.stopwatch.running:
             self.clock_frame.configure(text=self.stopwatch.display_elapsedTime(now))
             self.timeRemaining_label.configure(text=self.stopwatch.display_remainingTime(now))
