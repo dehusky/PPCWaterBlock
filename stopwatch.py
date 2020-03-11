@@ -84,7 +84,7 @@ class Stopwatch:
 
     def setTargetTime(self, secs):
         self.tgtTime = secs
-        print("stopwatch tgtTime: " + str(self.tgtTime))
+        self.remainingTestTime = self.tgtTime - self.currentDuration
 
     def getTargetTime(self):
         return self.tgtTime

@@ -1,3 +1,6 @@
+#!/usr/bin/python
+
+import os
 from tkinter import messagebox
 
 import RPi.GPIO as GPIO
@@ -11,8 +14,14 @@ GPIO.setwarnings(False)
 root = Tk()
 background_colour = 'yellow'
 
+
 def onExit():
     sys.exit()
+
+
+def onShutdown():
+    os.system("reboot")
+
 
 fullscreen = False
 lbl_bg_color = 'yellow'
@@ -51,6 +60,7 @@ aboutmenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label='File', menu=filemenu)
 menubar.add_cascade(label='About', menu=aboutmenu)
 filemenu.add_command(label='Exit', command=onExit)
+filemenu.add_command(label='Shutdown', command=onShutdown)
 aboutmenu.add_command(label='About', command=aboutInfo)
 
 ## Logo Image
@@ -83,10 +93,9 @@ title_label.grid(row=0, sticky='e')
 header_logo_image.grid(row=0, sticky='w')
 
 # create header row
-ctr_row0 = Frame(center_frame, bg=background_colour, width=root.winfo_reqwidth() - 10, height=43, padx=3, pady=3)
+ctr_row0 = Frame(center_frame, bg=background_colour, width=980, height=tube_row_height / 2, padx=3, pady=3)
 # create the individual frames for the rows to hold the stop watch objects
-ctr_row1 = Frame(center_frame, bg=background_colour, width=root.winfo_reqwidth() - 10, height=tube_row_height, padx=3,
-                 pady=3)
+ctr_row1 = Frame(center_frame, bg=background_colour, width=980, height=tube_row_height, padx=3, pady=3)
 ctr_row2 = Frame(center_frame, bg=background_colour, width=980, height=tube_row_height, padx=3, pady=3)
 ctr_row3 = Frame(center_frame, bg=background_colour, width=980, height=tube_row_height, padx=3, pady=3)
 ctr_row4 = Frame(center_frame, bg=background_colour, width=980, height=tube_row_height, padx=3, pady=3)
@@ -127,10 +136,10 @@ lbl_remaining = Label(ctr_row0, text='Remaining Time', bg=lbl_bg_color, fg=lbl_t
 # Place the header labels
 lbl_name.place(x=10, y=7, width=100, height=28)
 lbl_elapsed.place(x=120, y=5, width=200, height=28)
-lbl_days.place(x=330, y=5, width=40, height=30)
-lbl_hrs.place(x=380, y=5, width=40, height=30)
+lbl_days.place(x=326, y=5, width=40, height=30)
+lbl_hrs.place(x=376, y=5, width=40, height=30)
 lbl_mins.place(x=430, y=5, width=40, height=30)
-lbl_secs.place(x=480, y=5, width=40, height=30)
+lbl_secs.place(x=484, y=5, width=40, height=30)
 lbl_remaining.place(x=530, y=7, width=200, height=28)
 
 # setup GPIO hardware switches

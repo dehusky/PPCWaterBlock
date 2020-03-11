@@ -56,40 +56,186 @@ class App():
         self.tgtTimeEntry_M = NumpadEntry(self.root, textvariable=self.textEntryTgt_M)
         self.tgtTimeEntry_S = NumpadEntry(self.root, textvariable=self.textEntryTgt_S)
 
+        self.day_plus_btn = Button(self.root)
+        self.day_minus_btn = Button(self.root)
+        self.hr_plus_btn = Button(self.root)
+        self.hr_minus_btn = Button(self.root)
+        self.min_plus_btn = Button(self.root)
+        self.min_minus_btn = Button(self.root)
+        self.sec_plus_btn = Button(self.root)
+        self.sec_minus_btn = Button(self.root)
+
         self.tgtTimeEntry_D.bind("<Key>", self.callback_updateTgt)
         self.tgtTimeEntry_H.bind('<Key>', self.callback_updateTgt)
         self.tgtTimeEntry_M.bind('<Key>', self.callback_updateTgt)
         self.tgtTimeEntry_S.bind('<Key>', self.callback_updateTgt)
 
-        self.tgtTimeEntry_D.bind("<FocusOut>", self.callback_updateTgt)
-        self.tgtTimeEntry_H.bind('<FocusOut>', self.callback_updateTgt)
-        self.tgtTimeEntry_M.bind('<FocusOut>', self.callback_updateTgt)
-        self.tgtTimeEntry_S.bind('<FocusOut>', self.callback_updateTgt)
+        self.tgtTimeEntry_D.bind("<FocusOut>", self.callback_exit)
+        self.tgtTimeEntry_H.bind('<FocusOut>', self.callback_exit)
+        self.tgtTimeEntry_M.bind('<FocusOut>', self.callback_exit)
+        self.tgtTimeEntry_S.bind('<FocusOut>', self.callback_exit)
 
-        self.toggle_button = Button(self.root)
-        self.lap_button = Button(self.root)
-        self.reset_button = Button(self.root)
-        self.quitButton = Button(self.root)
+        self.toggle_button = Button(self.root)  # start/stop depending on state
+        self.lap_button = Button(self.root)  # not currently used
+        self.reset_button = Button(self.root)  # reset the timer to zero
+        self.quitButton = Button(self.root)  # not currently used
 
         self.setup(self.stopwatch)
         print("out of setup")
+
+    def dayPlus(self):
+        result = False
+        val = int(self.textEntryTgt_D.get())
+        if (val < 9):
+            val = val + 1
+            result = True
+        self.textEntryTgt_D.set(str(val))
+        self.update_sw_tgt()
+        return result
+
+    def dayMinus(self):
+        result = False
+        val = int(self.textEntryTgt_D.get())
+        if (val > 0):
+            val = val - 1
+            result = True
+        self.textEntryTgt_D.set(str(val))
+        self.update_sw_tgt()
+        return result
+
+    def hrPlus(self):
+        result = False
+        val = int(self.textEntryTgt_H.get())
+        if (val < 23):
+            val = val + 1
+            result = True
+        else:
+            if self.dayPlus():
+                val = 0
+                result = True
+            else:
+                val = 23  # unable to increase day so hr remains unchanged
+        self.textEntryTgt_H.set(str(val))
+        self.update_sw_tgt()
+        return result
+
+    def hrMinus(self):
+        result = False
+        val = int(self.textEntryTgt_H.get())
+        if (val > 0):
+            val = val - 1
+            result = True
+        else:
+            if self.dayMinus():
+                val = 23
+                result = True
+            else:
+                val = 0
+        self.textEntryTgt_H.set(str(val))
+        self.update_sw_tgt()
+        return result
+
+    def minPlus(self):
+        result = False
+        val = int(self.textEntryTgt_M.get())
+        if (val < 59):
+            val = val + 1
+            result = True
+        else:
+            if self.hrPlus():
+                val = 0
+                result = True
+            else:
+                val = 59  # unable to increase day so hr remains unchanged
+        self.textEntryTgt_M.set(str(val))
+        self.update_sw_tgt()
+        return result
+
+    def minMinus(self):
+        result = False
+        val = int(self.textEntryTgt_M.get())
+        if (val > 0):
+            val = val - 1
+            result = True
+        else:
+            if self.hrMinus():
+                val = 59
+                result = True
+            else:
+                val = 0
+        self.textEntryTgt_M.set(str(val))
+        self.update_sw_tgt()
+        return result
+
+    def secPlus(self):
+        result = False
+        val = int(self.textEntryTgt_S.get())
+        if (val < 59):
+            val = val + 1
+            result = True
+        else:
+            if self.minPlus():
+                val = 0
+                result = True
+            else:
+                val = 59  # unable to increase day so hr remains unchanged
+        self.textEntryTgt_S.set(str(val))
+        self.update_sw_tgt()
+        return result
+
+    def secMinus(self):
+        result = False
+        val = int(self.textEntryTgt_S.get())
+        if (val > 0):
+            val = val - 1
+            result = True
+        else:
+            if self.minMinus():
+                val = 59
+                result = True
+            else:
+                val = 0
+        self.textEntryTgt_S.set(str(val))
+        self.update_sw_tgt()
+        return result
+
+    def callback_exit(self, e):
+        print("callback_exit")
+        self.callback_updateTgt(e)
+        self.timeRemaining_label.focus_set()
 
     def setup(self, sw):
         # Create all of the GUI components and build all the visuals
         print("setup")
         self.name_label.configure(text=sw.name, font=("default", 15, "bold"), bg="blue", fg="white")
-        self.clock_frame.configure(text="00:00:00", bg="white", fg="blue",
+        self.clock_frame.configure(text="0:00:00:00", bg="white", fg="blue",
                                    font=("default", self.stopwatch_digit_size, "bold"), width=500, height=200)
-        self.timeRemaining_label.configure(text="00:00:00", bg="white", fg="blue",
+        self.timeRemaining_label.configure(text="0:00:00:00", bg="white", fg="blue",
                                            font=("default", self.stopwatch_digit_size, "bold"), width=500, height=200)
         self.tgtTimeEntry_D.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size - 4, "bold"),
                                       width=40)
+        self.day_plus_btn.configure(text="+", bg=self.toggle_btn_color_stopped,
+                                    fg="white", command=self.dayPlus, font=("default", 12, "bold"))
+        self.day_minus_btn.configure(text="-", bg=self.toggle_btn_color_stopped,
+                                     fg="white", command=self.dayMinus, font=("default", 12, "bold"))
         self.tgtTimeEntry_H.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size - 4, "bold"),
                                       width=40)
+        self.hr_plus_btn.configure(text="+", bg=self.toggle_btn_color_stopped,
+                                   fg="white", command=self.hrPlus, font=("default", 12, "bold"))
+        self.hr_minus_btn.configure(text="-", bg=self.toggle_btn_color_stopped,
+                                    fg="white", command=self.hrMinus, font=("default", 12, "bold"))
         self.tgtTimeEntry_M.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size - 4, "bold"),
                                       width=40)
+        self.min_plus_btn.configure(text="+", bg=self.toggle_btn_color_stopped,
+                                    fg="white", command=self.minPlus, font=("default", 12, "bold"))
+        self.min_minus_btn.configure(text="-", bg=self.toggle_btn_color_stopped,
+                                     fg="white", command=self.minMinus, font=("default", 12, "bold"))
         self.tgtTimeEntry_S.configure(bg="white", fg="blue", font=("default", self.stopwatch_digit_size - 4, "bold"),
                                       width=40)
+        self.sec_plus_btn.configure(text="+", bg=self.toggle_btn_color_stopped,
+                                    fg="white", command=self.secPlus, font=("default", 12, "bold"))
+        self.sec_minus_btn.configure(text="-", bg=self.toggle_btn_color_stopped,
+                                     fg="white", command=self.secMinus, font=("default", 12, "bold"))
         self.toggle_button.configure(text="START", bg=self.toggle_btn_color_stopped,
                                      fg=self.toggle_btn_color_stopped_text, command=self.toggle,
                                      font=("default", 12, "bold"))
@@ -103,11 +249,19 @@ class App():
 
         self.name_label.place(x=10, y=10, width=100, height=33)
         self.clock_frame.place(x=120, y=10, width=200, height=33)
-        self.tgtTimeEntry_D.place(x=330, y=10, width=40, height=33)
-        self.tgtTimeEntry_H.place(x=380, y=10, width=40, height=33)
-        self.tgtTimeEntry_M.place(x=430, y=10, width=40, height=33)
-        self.tgtTimeEntry_S.place(x=480, y=10, width=40, height=33)
-        self.timeRemaining_label.place(x=530, y=10, width=200, height=33)
+        self.tgtTimeEntry_D.place(x=325, y=10, width=27, height=33)
+        self.day_plus_btn.place(x=354, y=10, width=15, height=15)
+        self.day_minus_btn.place(x=354, y=27, width=15, height=15)
+        self.tgtTimeEntry_H.place(x=371, y=10, width=40, height=33)
+        self.hr_plus_btn.place(x=411, y=10, width=15, height=15)
+        self.hr_minus_btn.place(x=411, y=27, width=15, height=15)
+        self.tgtTimeEntry_M.place(x=428, y=10, width=40, height=33)
+        self.min_plus_btn.place(x=468, y=10, width=15, height=15)
+        self.min_minus_btn.place(x=468, y=27, width=15, height=15)
+        self.tgtTimeEntry_S.place(x=484, y=10, width=40, height=33)
+        self.sec_plus_btn.place(x=524, y=10, width=15, height=15)
+        self.sec_minus_btn.place(x=524, y=27, width=15, height=15)
+        self.timeRemaining_label.place(x=535, y=10, width=195, height=33)
         self.toggle_button.place(x=740, y=10, width=100, height=33)
         self.reset_button.place(x=850, y=10, width=100, height=33)
         self.testStatus_label.place(x=10, y=45, width=1000, height=33)
@@ -118,8 +272,6 @@ class App():
     def callback_updateTgt(self, e):
         try:
             self.tgt_D = int(self.tgtTimeEntry_D.get())
-            print("in callback_update")
-            print(self.tgt_D)
             if self.tgt_D < 0:
                 self.tgtTimeEntry_D.insert(2, '0')
         except:
@@ -146,6 +298,19 @@ class App():
             self.stopwatch.setTargetTime(tgtSeconds)
         except:
             print('Error Found: ' + str(e))
+        self.updateTimer()
+
+    def update_sw_tgt(self):
+        # get the current values from the target entry boxes
+        tgt_D = int(self.tgtTimeEntry_D.get())
+        tgt_H = int(self.tgtTimeEntry_H.get())
+        tgt_M = int(self.tgtTimeEntry_M.get())
+        tgt_S = int(self.tgtTimeEntry_S.get())
+        # calculate the target number of seconds
+        tgtSeconds = (tgt_D * 24 * 60 * 60) + (tgt_H * 60 * 60) + (tgt_M * 60) + tgt_S
+        # set the target time in the related stopwatch and update the timer
+        self.stopwatch.setTargetTime(tgtSeconds)
+        self.updateTimer()
 
     def showTimeDigits(self, digit):
         display = str(digit)
