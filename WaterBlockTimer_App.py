@@ -7,6 +7,8 @@ import RPi.GPIO as GPIO
 
 from WaterBlockTest_aStopWatchFrame import *
 
+versionNumber = "0.8"
+
 # setup GPIO
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -14,14 +16,20 @@ GPIO.setwarnings(False)
 root = Tk()
 background_colour = 'yellow'
 
-
 def onExit():
     sys.exit()
 
-
 def onShutdown():
-    os.system("reboot")
+    #os.system("reboot")
+    shutDown = messagebox.askquestion("Quit","Are you sure you want to turn off?")
+    if shutDown == "yes":
+        os.system("reboot")
 
+def aboutInfo():
+    messagebox.showinfo("PPC UK", "Timer by D Earley\nVersion: " + versionNumber)
+
+def stopGPIOPins():
+    messagebox.showinfo("GPIO Pin", "Stop Timers with Pins:\n8, 7, 12, 16")
 
 fullscreen = False
 lbl_bg_color = 'yellow'
@@ -48,20 +56,19 @@ root.title('Water Block Tester')
 root.geometry('{}x{}'.format(window_width, window_height))
 root.attributes("-fullscreen", fullscreen)
 
-
-def aboutInfo():
-    messagebox.showinfo("Water Block Tester", "Timer by D Earley")
-
-
 menubar = Menu(root)
 root.config(menu=menubar)
+
 filemenu = Menu(menubar, tearoff=0)
 aboutmenu = Menu(menubar, tearoff=0)
+
 menubar.add_cascade(label='File', menu=filemenu)
-menubar.add_cascade(label='About', menu=aboutmenu)
-filemenu.add_command(label='Exit', command=onExit)
+menubar.add_command(label='About', command=aboutInfo) #menu=aboutmenu
+
+filemenu.add_command(label='GPIO Pins', command=stopGPIOPins)
 filemenu.add_command(label='Shutdown', command=onShutdown)
-aboutmenu.add_command(label='About', command=aboutInfo)
+filemenu.add_command(label='Exit', command=onExit)
+#aboutmenu.add_command(label='About', command=aboutInfo)
 
 ## Logo Image
 logo_image = PhotoImage(file="Belden_PPC_logo-standard.png").subsample(10, 10)

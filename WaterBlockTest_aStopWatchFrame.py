@@ -51,10 +51,15 @@ class App():
         self.textEntryTgt_M.set('0')
         self.textEntryTgt_S.set('0')
 
-        self.tgtTimeEntry_D = NumpadEntry(self.root, textvariable=self.textEntryTgt_D)
-        self.tgtTimeEntry_H = NumpadEntry(self.root, textvariable=self.textEntryTgt_H)
-        self.tgtTimeEntry_M = NumpadEntry(self.root, textvariable=self.textEntryTgt_M)
-        self.tgtTimeEntry_S = NumpadEntry(self.root, textvariable=self.textEntryTgt_S)
+        #self.tgtTimeEntry_D = NumpadEntry(self.root, textvariable=self.textEntryTgt_D)
+        #self.tgtTimeEntry_H = NumpadEntry(self.root, textvariable=self.textEntryTgt_H)
+        #self.tgtTimeEntry_M = NumpadEntry(self.root, textvariable=self.textEntryTgt_M)
+        #self.tgtTimeEntry_S = NumpadEntry(self.root, textvariable=self.textEntryTgt_S)
+
+        self.tgtTimeEntry_D = Entry(self.root, textvariable=self.textEntryTgt_D)
+        self.tgtTimeEntry_H = Entry(self.root, textvariable=self.textEntryTgt_H)
+        self.tgtTimeEntry_M = Entry(self.root, textvariable=self.textEntryTgt_M)
+        self.tgtTimeEntry_S = Entry(self.root, textvariable=self.textEntryTgt_S)
 
         self.day_plus_btn = Button(self.root)
         self.day_minus_btn = Button(self.root)
@@ -242,7 +247,7 @@ class App():
         self.reset_button.configure(text="RESET", bg="orange", fg="black", command=self.reset,
                                     font=("default", 12, "bold"))
         self.testStatus_label.configure(text=self.testStatus, bg="yellow",
-                                        fg=self.testColor[self.stopwatch.getStatus()],
+                                        fg=self.testColor[self.stopwatch.getStatus_int()],
                                         font=("default", self.stopwatch_digit_size - 2, "bold"), width=980, height=180,
                                         anchor="w")
         self.quitButton.configure(text="Quit", bg="red", fg="white", command=self.quit(), font=("default", 15, "bold"))
@@ -349,7 +354,7 @@ class App():
     def updateTimer(self):
         now = time.time()
         self.testStatus_label.configure(text=self.stopwatch.getStatusText(),
-                                        fg=self.testColor[self.stopwatch.getStatus()])
+                                        fg=self.testColor[self.stopwatch.getStatus_int()])
         if self.stopwatch.running:
             self.clock_frame.configure(text=self.stopwatch.display_elapsedTime(now))
             self.timeRemaining_label.configure(text=self.stopwatch.display_remainingTime(now))
