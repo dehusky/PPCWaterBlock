@@ -20,9 +20,10 @@ class Stopwatch:
     def start(self):
         print("Stopwatch>Start")
         # Implement your starting of the timer code here
-        self.start_time = time.time()
-        self.running = True
-        self.testStatus_int = 1  # running
+        if not self.testStatus_int==4:
+            self.start_time = time.time()
+            self.running = True
+            self.testStatus_int = 1  # running
 
     def stop(self):
         print("Stopwatch>Stop")
@@ -115,7 +116,9 @@ class Stopwatch:
 
     def fail(self):
         print("stopwatch>fail activated")
-        self.failed = True
+        if self.testStatus_int==1:
+            self.failed = True
+            self.stop()
         self.update_test_status(self.remainingTestTime)
         return self.failed
 

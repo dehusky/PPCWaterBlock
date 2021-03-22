@@ -328,14 +328,8 @@ class App():
 
     def fail(self):
         print("fail activated")
-        if self.stopwatch.testStatus_int==1:
-            self.stop()
-            self.stopwatch.fail()
+        self.stopwatch.fail()
         self.updateTimer()
-
-    def fail(self):
-        self.toggle()
-        self.fail()
 
     def start(self):
         self.stopwatch.start()  # let it do the logical work
