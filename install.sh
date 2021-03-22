@@ -8,8 +8,6 @@ else
    echo "Directory exists, updating files..." 
 fi
 
-cd /opt/PPC_WB_Tester
-
 # copy all files from installation directory to local directory
 cp -avr * /opt/PPC_WB_Tester >> /tmp/PPC_WB_Tester_1.log 2>&1
 echo "Files copied to /opt/PPC_WB_Tester"
