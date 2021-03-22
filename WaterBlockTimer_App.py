@@ -29,7 +29,7 @@ def aboutInfo():
     messagebox.showinfo("PPC UK", "Timer by D Earley\nVersion: " + versionNumber)
 
 def stopGPIOPins():
-    messagebox.showinfo("GPIO Pin", "Stop Timers with Pins:\n8, 7, 12, 16")
+    messagebox.showinfo("GPIO Pin", "Stop Timers with Pins:\nPin 8  - Tube 1\nPin  7 - Tube 2\nPin 12 - Tube 3\nPin 16 - Tube 4")
 
 fullscreen = False
 lbl_bg_color = 'yellow'

@@ -20,11 +20,11 @@ sudo chmod ugo+x /usr/local/bin/run.sh
 
 
 # check if autostart contains run.sh and if not add it
-if (grep "$@/usr/local/bin/run.sh" ~/.config/lxsession/LXDE-pi/autostart > /dev/null)
+if (grep "$@/usr/local/bin/run.sh" /etc/xdg/lxsession/LXDE-pi > /dev/null)
 then
    echo "run.sh found in /lxsession/autostart"
 else
    # echo "lxsession/autostart checked, run.sh not found, adding now..."
-   echo "@/opt/PPC_WB_Tester/run.sh" >> ~/.config/lxsession/LXDE-pi/autostart
+   echo "@/opt/PPC_WB_Tester/run.sh" >> /etc/xdg/lxsession/LXDE-pi/autostart
    echo "added run.sh routine to lxsession/autostart"
 fi
