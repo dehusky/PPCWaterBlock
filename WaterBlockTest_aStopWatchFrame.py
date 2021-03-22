@@ -46,15 +46,10 @@ class App():
         self.textEntryTgt_M = StringVar()
         self.textEntryTgt_S = StringVar()
 
-        self.textEntryTgt_D.set('0')
-        self.textEntryTgt_H.set('1')
+        self.textEntryTgt_D.set('1')
+        self.textEntryTgt_H.set('0')
         self.textEntryTgt_M.set('0')
         self.textEntryTgt_S.set('0')
-
-        #self.tgtTimeEntry_D = NumpadEntry(self.root, textvariable=self.textEntryTgt_D)
-        #self.tgtTimeEntry_H = NumpadEntry(self.root, textvariable=self.textEntryTgt_H)
-        #self.tgtTimeEntry_M = NumpadEntry(self.root, textvariable=self.textEntryTgt_M)
-        #self.tgtTimeEntry_S = NumpadEntry(self.root, textvariable=self.textEntryTgt_S)
 
         self.tgtTimeEntry_D = Entry(self.root, textvariable=self.textEntryTgt_D)
         self.tgtTimeEntry_H = Entry(self.root, textvariable=self.textEntryTgt_H)
@@ -255,17 +250,17 @@ class App():
         self.name_label.place(x=10, y=10, width=100, height=33)
         self.clock_frame.place(x=120, y=10, width=200, height=33)
         self.tgtTimeEntry_D.place(x=325, y=10, width=27, height=33)
-        self.day_plus_btn.place(x=354, y=10, width=15, height=15)
-        self.day_minus_btn.place(x=354, y=27, width=15, height=15)
+        self.day_plus_btn.place(x=354, y=8, width=15, height=17)
+        self.day_minus_btn.place(x=354, y=27, width=15, height=17)
         self.tgtTimeEntry_H.place(x=371, y=10, width=40, height=33)
-        self.hr_plus_btn.place(x=411, y=10, width=15, height=15)
-        self.hr_minus_btn.place(x=411, y=27, width=15, height=15)
+        self.hr_plus_btn.place(x=411, y=8, width=15, height=17)
+        self.hr_minus_btn.place(x=411, y=27, width=15, height=17)
         self.tgtTimeEntry_M.place(x=428, y=10, width=40, height=33)
-        self.min_plus_btn.place(x=468, y=10, width=15, height=15)
-        self.min_minus_btn.place(x=468, y=27, width=15, height=15)
+        self.min_plus_btn.place(x=468, y=8, width=15, height=17)
+        self.min_minus_btn.place(x=468, y=27, width=15, height=17)
         self.tgtTimeEntry_S.place(x=484, y=10, width=40, height=33)
-        self.sec_plus_btn.place(x=524, y=10, width=15, height=15)
-        self.sec_minus_btn.place(x=524, y=27, width=15, height=15)
+        self.sec_plus_btn.place(x=524, y=8, width=15, height=17)
+        self.sec_minus_btn.place(x=524, y=27, width=15, height=17)
         self.timeRemaining_label.place(x=535, y=10, width=195, height=33)
         self.toggle_button.place(x=740, y=10, width=100, height=33)
         self.reset_button.place(x=850, y=10, width=100, height=33)
@@ -328,6 +323,10 @@ class App():
             self.stop()
         else:
             self.start()
+
+    def fail(self):
+        self.toggle()
+        self.fail()
 
     def start(self):
         self.stopwatch.start()  # let it do the logical work

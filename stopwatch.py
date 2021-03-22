@@ -112,6 +112,9 @@ class Stopwatch:
         status = self.testStatus_int
         return status
 
+    def fail(self):
+        self.failed = True
+
     def getStatusText(self):
         status = self.getStatus_int()
         txt = self.statusText[status]
