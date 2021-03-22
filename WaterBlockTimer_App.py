@@ -169,13 +169,13 @@ def switchPin_callback(channel):
     #    if channel == 20 and sw5.getRunning():
     #        sw5.toggle()
     if channel == 16 and sw4.getRunning():
-        sw4.toggle()
+        sw4.fail()
     if channel == 12 and sw3.getRunning():
-        sw3.toggle()
+        sw3.fail()
     if channel == 7 and sw2.getRunning():
-        sw2.toggle()
+        sw2.fail()
     if channel == 8 and sw1.getRunning():
-        sw1.toggle()
+        sw1.fail()
 
 for switch in start_switch:
     GPIO.setup(switch, GPIO.IN, pull_up_down=GPIO.PUD_UP)

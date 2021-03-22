@@ -12,7 +12,7 @@ class Stopwatch:
         self.running = False
         self.currentDuration = 0
         self.tgtTime = 1 * 24 * 60 * 60  # 1 day
-        self.statusText = ["Ready", "Running", "Paused", "Passed", "Failed"]
+        self.statusText = ["Ready", "Running", "Paused", "Passed", "Failed, press reset"]
         self.testStatus_int = 0  # "Ready",
         self.remainingTestTime = self.tgtTime - self.currentDuration
         self.failed = False
@@ -31,6 +31,7 @@ class Stopwatch:
         self.currentDuration = self.currentDuration + (now - self.start_time)
         self.running = False
         self.stopTime = now
+        self.update_test_status(self.remainingTestTime)
 
     def reset(self):
         # Implement your watch reset logic here
@@ -111,6 +112,12 @@ class Stopwatch:
     def getStatus_int(self):
         status = self.testStatus_int
         return status
+
+    def fail(self):
+        print("stopwatch>fail activated")
+        self.failed = True
+        self.update_test_status(self.remainingTestTime)
+        return self.failed
 
     def getStatusText(self):
         status = self.getStatus_int()
