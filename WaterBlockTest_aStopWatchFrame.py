@@ -333,6 +333,10 @@ class App():
             self.stopwatch.fail()
         self.updateTimer()
 
+    def fail(self):
+        self.toggle()
+        self.fail()
+
     def start(self):
         self.stopwatch.start()  # let it do the logical work
         # do your GUI updates
