@@ -346,6 +346,8 @@ class App():
         self.updateTimer()
 
     def reset(self):
+        if self.stopwatch.testStatus_int==4: # in failed mode so stop
+            self.stop()
         now = time.time()
         self.stopwatch.reset()  # Logic handled in the Stopwatch class
         remainingTime = self.stopwatch.display_remainingTime(drt_now=now)

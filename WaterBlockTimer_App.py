@@ -7,7 +7,7 @@ import RPi.GPIO as GPIO
 
 from WaterBlockTest_aStopWatchFrame import *
 
-versionNumber = "0.9"
+versionNumber = "0.9b"
 
 # setup GPIO
 GPIO.setmode(GPIO.BCM)
@@ -29,7 +29,7 @@ def aboutInfo():
     messagebox.showinfo("PPC UK", "Timer by D Earley\nVersion: " + versionNumber)
 
 def stopGPIOPins():
-    messagebox.showinfo("GPIO Pin", "Stop Timers with Pins:\nPin 8  - Tube 1\nPin  7 - Tube 2\nPin 12 - Tube 3\nPin 16 - Tube 4")
+    messagebox.showinfo("GPIO Pin", "Stop Timers with Pins:\nPin 8  - Tube 1 [orange]\nPin  7 - Tube 2 [green]\nPin 12 - Tube 3 [brown]\nPin 16 - Tube 4 [blue]")
 
 fullscreen = False
 lbl_bg_color = 'yellow'

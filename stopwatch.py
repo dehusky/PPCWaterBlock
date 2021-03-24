@@ -36,6 +36,9 @@ class Stopwatch:
 
     def reset(self):
         # Implement your watch reset logic here
+        if self.testStatus_int==4: # failed, stop then reset
+            self.stop()
+            print("reset pressed, stop()")
         self.currentDuration = 0
         self.start_time = time.time()
         self.failed = False
