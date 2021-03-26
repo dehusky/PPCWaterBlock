@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
-cd /opt/PPC_WB_Tester
+import git
 
-sudo git pull origin master
+cd /opt/PPC_WB_Tester
+g=git.cmd.Git('https://github.com/dehusky/PPCWaterBlock')
+
+g.pull()
+#sudo git pull origin master
