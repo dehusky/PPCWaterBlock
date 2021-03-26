@@ -2,11 +2,13 @@
 import time
 from tkinter import *
 
-from NumpadEntry import NumpadEntry
 from stopwatch import Stopwatch
 
 
-class App():
+# from NumpadEntry import NumpadEntry
+
+
+class App:
     apps = []
 
     def __init__(self, root, **kwargs):
@@ -86,7 +88,7 @@ class App():
     def dayPlus(self):
         result = False
         val = int(self.textEntryTgt_D.get())
-        if (val < 9):
+        if val < 9:
             val = val + 1
             result = True
         self.textEntryTgt_D.set(str(val))
@@ -96,7 +98,7 @@ class App():
     def dayMinus(self):
         result = False
         val = int(self.textEntryTgt_D.get())
-        if (val > 0):
+        if val > 0:
             val = val - 1
             result = True
         self.textEntryTgt_D.set(str(val))
@@ -106,7 +108,7 @@ class App():
     def hrPlus(self):
         result = False
         val = int(self.textEntryTgt_H.get())
-        if (val < 23):
+        if val < 23:
             val = val + 1
             result = True
         else:
@@ -122,7 +124,7 @@ class App():
     def hrMinus(self):
         result = False
         val = int(self.textEntryTgt_H.get())
-        if (val > 0):
+        if val > 0:
             val = val - 1
             result = True
         else:
@@ -138,7 +140,7 @@ class App():
     def minPlus(self):
         result = False
         val = int(self.textEntryTgt_M.get())
-        if (val < 59):
+        if val < 59:
             val = val + 1
             result = True
         else:
@@ -154,7 +156,7 @@ class App():
     def minMinus(self):
         result = False
         val = int(self.textEntryTgt_M.get())
-        if (val > 0):
+        if val > 0:
             val = val - 1
             result = True
         else:
@@ -170,7 +172,7 @@ class App():
     def secPlus(self):
         result = False
         val = int(self.textEntryTgt_S.get())
-        if (val < 59):
+        if val < 59:
             val = val + 1
             result = True
         else:
@@ -186,7 +188,7 @@ class App():
     def secMinus(self):
         result = False
         val = int(self.textEntryTgt_S.get())
-        if (val > 0):
+        if val > 0:
             val = val - 1
             result = True
         else:
@@ -346,7 +348,7 @@ class App():
         self.updateTimer()
 
     def reset(self):
-        if self.stopwatch.testStatus_int==4: # in failed mode so stop
+        if self.stopwatch.testStatus_int == 4:  # in failed mode so stop
             self.stop()
         now = time.time()
         self.stopwatch.reset()  # Logic handled in the Stopwatch class

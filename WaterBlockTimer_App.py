@@ -28,6 +28,13 @@ def onShutdown():
 def aboutInfo():
     messagebox.showinfo("PPC UK", "Timer by D Earley\nVersion: " + versionNumber)
 
+def update():
+    updateQuestion = messagebox.askquestion("Update", "Warning: Update will close the application\nAll timers will be lost\nDo you wish to continue?")
+    if updateQuestion == "yes":
+        # do something here to update the software
+        messagebox.showinfo("Water Block Tester","Update not yet implemented")
+        os.system("sudo sh update_from_github.sh 1")
+
 def stopGPIOPins():
     messagebox.showinfo("GPIO Pin", "Stop Timers with Pins:\nPin 8  - Tube 1 [orange]\nPin  7 - Tube 2 [green]\nPin 12 - Tube 3 [brown]\nPin 16 - Tube 4 [blue]")
 
@@ -63,12 +70,14 @@ filemenu = Menu(menubar, tearoff=0)
 aboutmenu = Menu(menubar, tearoff=0)
 
 menubar.add_cascade(label='File', menu=filemenu)
-menubar.add_command(label='About', command=aboutInfo) #menu=aboutmenu
+menubar.add_cascade(label='About', menu=aboutmenu) #menu=aboutmenu
 
 filemenu.add_command(label='GPIO Pins', command=stopGPIOPins)
 filemenu.add_command(label='Shutdown', command=onShutdown)
 filemenu.add_command(label='Exit', command=onExit)
 #aboutmenu.add_command(label='About', command=aboutInfo)
+aboutmenu.add_command(label='About', command=aboutInfo)
+aboutmenu.add_command(label='App Update', command=update)
 
 ## Logo Image
 logo_image = PhotoImage(file="Belden_PPC_logo-standard.png").subsample(10, 10)
