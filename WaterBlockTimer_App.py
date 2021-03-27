@@ -7,7 +7,7 @@ import RPi.GPIO as GPIO
 
 from WaterBlockTest_aStopWatchFrame import *
 
-versionNumber = "0.9b"
+versionNumber = "0.9c"
 
 # setup GPIO
 GPIO.setmode(GPIO.BCM)
