@@ -7,7 +7,7 @@ import RPi.GPIO as GPIO
 
 from WaterBlockTest_aStopWatchFrame import *
 
-versionNumber = "0.9f"
+versionNumber = "0.9g"
 
 # setup GPIO
 GPIO.setmode(GPIO.BCM)
@@ -34,6 +34,8 @@ def update():
         # do something here to update the software
         messagebox.showinfo("Water Block Tester","Update not yet implemented")
         os.system("sudo sh update_from_github.sh 1")
+        sys.exit()
+        os.system("sh run.sh")
 
 def stopGPIOPins():
     messagebox.showinfo("GPIO Pin", "Stop Timers with Pins:\nPin 8  - Tube 1 [orange]\nPin  7 - Tube 2 [green]\nPin 12 - Tube 3 [brown]\nPin 16 - Tube 4 [blue]")
