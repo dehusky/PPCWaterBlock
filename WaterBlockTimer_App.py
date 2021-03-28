@@ -7,7 +7,7 @@ import RPi.GPIO as GPIO
 
 from WaterBlockTest_aStopWatchFrame import *
 
-versionNumber = "0.9g"
+versionNumber = "0.9h"
 
 # setup GPIO
 GPIO.setmode(GPIO.BCM)
@@ -32,7 +32,7 @@ def update():
     updateQuestion = messagebox.askquestion("Update", "Warning: Update will close the application\nAll timers will be lost\nDo you wish to continue?")
     if updateQuestion == "yes":
         # do something here to update the software
-        messagebox.showinfo("Water Block Tester","Update not yet implemented")
+        #messagebox.showinfo("Water Block Tester","Update not yet implemented")
         os.system("sudo sh update_from_github.sh 1")
         sys.exit()
         os.system("sh run.sh")
