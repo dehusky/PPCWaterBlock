@@ -247,7 +247,7 @@ class App:
                                         fg=self.testColor[self.stopwatch.getStatus_int()],
                                         font=("default", self.stopwatch_digit_size - 2, "bold"), width=980, height=180,
                                         anchor="w")
-        self.quitButton.configure(text="Quit", bg="red", fg="white", command=self.quit, font=("default", 15, "bold"))
+        # self.quitButton.configure(text="Quit", bg="red", fg="white", command=self.quit, font=("default", 15, "bold"))
 
         self.name_label.place(x=10, y=10, width=100, height=33)
         self.clock_frame.place(x=120, y=10, width=200, height=33)
@@ -266,8 +266,8 @@ class App:
         self.timeRemaining_label.place(x=535, y=10, width=195, height=33)
         self.toggle_button.place(x=740, y=10, width=100, height=33)
         self.reset_button.place(x=850, y=10, width=100, height=33)
-        self.quitButton.place(x=950, y=10, width=100, height=33)
-        # self.testStatus_label.place(x=10, y=45, width=1000, height=33)
+        # self.quitButton.place(x=950, y=10, width=100, height=33)
+        self.testStatus_label.place(x=10, y=45, width=1000, height=33)
         print("finished setup, about to run self.updateTimer")
         self.updateTimer()
         print("finished self.updateTimer")
