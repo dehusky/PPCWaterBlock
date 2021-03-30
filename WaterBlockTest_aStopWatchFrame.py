@@ -267,7 +267,7 @@ class App:
         self.toggle_button.place(x=740, y=10, width=100, height=33)
         self.reset_button.place(x=850, y=10, width=100, height=33)
         self.quitButton.place(x=950, y=10, width=100, height=33)
-        self.testStatus_label.place(x=10, y=45, width=1000, height=33)
+        # self.testStatus_label.place(x=10, y=45, width=1000, height=33)
         print("finished setup, about to run self.updateTimer")
         self.updateTimer()
         print("finished self.updateTimer")
