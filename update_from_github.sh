@@ -6,7 +6,7 @@ cd /opt/PPC_WB_Tester
 
 sudo git pull origin master
 
-FILE=/home/pi/Desktop/Water Block Timer
+FILE=/home/pi/Desktop/WaterBlockTimer
 if test -f "$FILE"; then
     echo "$FILE exists."
 else
