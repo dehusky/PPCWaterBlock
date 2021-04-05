@@ -7,7 +7,7 @@ import RPi.GPIO as GPIO
 
 from WaterBlockTest_aStopWatchFrame import *
 
-versionNumber = "1.01"
+versionNumber = "1.02"
 
 fullscreen = False
 lbl_bg_color = 'yellow'
@@ -62,6 +62,32 @@ def update():
         os.system("sudo sh update_from_github.sh 1")
         sys.exit()
         os.system("sh run.sh")
+
+def startAll():
+    if not sw1.getRunning():
+        sw1.start()
+    if not sw2.getRunning():
+        sw2.start()
+    if not sw3.getRunning():
+        sw3.start()
+    if not sw4.getRunning():
+        sw4.start()
+
+def stopAll():
+    if sw1.getRunning():
+        sw1.stop()
+    if sw2.getRunning():
+        sw2.stop()
+    if sw3.getRunning():
+        sw3.stop()
+    if sw4.getRunning():
+        sw4.stop()
+
+def resetAll():
+    sw1.reset()
+    sw2.reset()
+    sw3.reset()
+    sw4.reset()
 
 def stopGPIOPins():
     messagebox.showinfo("GPIO Pin", "Stop Timers with Pins:\nPin 8  - Tube 1 [orange]\nPin  7 - Tube 2 [green]\nPin 12 - Tube 3 [brown]\nPin 16 - Tube 4 [blue]")
@@ -152,6 +178,13 @@ lbl_mins = Label(ctr_row0, text='Mins', bg=lbl_bg_color, fg=lbl_txt_color, font=
 lbl_secs = Label(ctr_row0, text='Secs', bg=lbl_bg_color, fg=lbl_txt_color, font=('default', 11), anchor="center")
 lbl_remaining = Label(ctr_row0, text='Remaining Time', bg=lbl_bg_color, fg=lbl_txt_color, font=('default', 12),
                       anchor="center")
+# Create Global Action Buttons
+start_all = Button(ctr_row0, text="Start All", bg="green", fg="blue", command=startAll,
+                                    font=("default", 9))  # Start all non running timers
+stop_all = Button(ctr_row0, text="Stop All", bg="red", fg="white", command=stopAll,
+                                    font=("default", 9))  # Stop all running timers
+reset_all = Button(ctr_row0, text="Reset All", bg="orange", fg="black", command=resetAll,
+                                    font=("default", 12, "bold"))  # reset all timers to zero
 
 # Place the header labels
 lbl_name.place(x=10, y=7, width=100, height=28)
@@ -162,6 +195,9 @@ lbl_mins.place(x=430, y=5, width=40, height=30)
 lbl_secs.place(x=484, y=5, width=40, height=30)
 lbl_remaining.place(x=530, y=7, width=200, height=28)
 
+start_all.place(x=739, y=2, width=100, height=17)
+stop_all.place(x=739, y=20, width=100, height=17)
+reset_all.place(x=850, y=4, width=100, height=30)
 # setup GPIO hardware switches
 start_switch = [0, 8, 7, 12, 16, 20, 21]  # switch pins starting at switch[1] (0 is place holder)
 start_switches = [
