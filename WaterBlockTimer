@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=PPCWaterBlockTester
 Path=/opt/PPCWaterBlock
-Exec=run.sh %F
+Exec=run.sh
 Icon=/opt/PPCWaterBlock/Belden_PPC_logo-standard.png
 Type=Application
 Terminal=false
