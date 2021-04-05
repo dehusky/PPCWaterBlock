@@ -7,7 +7,30 @@ import RPi.GPIO as GPIO
 
 from WaterBlockTest_aStopWatchFrame import *
 
-versionNumber = "1.0"
+versionNumber = "1.01"
+
+fullscreen = False
+lbl_bg_color = 'yellow'
+lbl_txt_color = 'blue'
+toggle_btn_color_stopped = 'green'
+toggle_btn_color_stopped_text = 'blue'
+toggle_btn_color_running = 'red'
+toggle_btn_color_running_text = 'white'
+
+menu_font=("Verdana", 18)
+
+header_height = 80
+bottom_height = 80
+center_border = 80
+number_of_tubes = 4
+tube_row_height = 80
+
+final_spacer = int(round((tube_row_height / 6)))
+total_rows_plus_final = int(
+    round((number_of_tubes * ((tube_row_height) + 1)) + final_spacer + header_height + bottom_height + center_border))
+
+window_width = 1024
+window_height = total_rows_plus_final
 
 # setup GPIO
 GPIO.setmode(GPIO.BCM)
@@ -15,6 +38,9 @@ GPIO.setwarnings(False)
 
 root = Tk()
 background_colour = 'yellow'
+root.title('Water Block Tester')
+root.geometry('{}x{}'.format(window_width, window_height))
+root.attributes("-fullscreen", fullscreen)
 
 def onExit():
     sys.exit()
@@ -40,30 +66,6 @@ def update():
 def stopGPIOPins():
     messagebox.showinfo("GPIO Pin", "Stop Timers with Pins:\nPin 8  - Tube 1 [orange]\nPin  7 - Tube 2 [green]\nPin 12 - Tube 3 [brown]\nPin 16 - Tube 4 [blue]")
 
-fullscreen = False
-lbl_bg_color = 'yellow'
-lbl_txt_color = 'blue'
-toggle_btn_color_stopped = 'green'
-toggle_btn_color_stopped_text = 'blue'
-toggle_btn_color_running = 'red'
-toggle_btn_color_running_text = 'white'
-
-header_height = 80
-bottom_height = 80
-center_border = 80
-number_of_tubes = 4
-tube_row_height = 80
-
-final_spacer = int(round((tube_row_height / 6)))
-total_rows_plus_final = int(
-    round((number_of_tubes * ((tube_row_height) + 1)) + final_spacer + header_height + bottom_height + center_border))
-
-window_width = 1024
-window_height = total_rows_plus_final
-
-root.title('Water Block Tester')
-root.geometry('{}x{}'.format(window_width, window_height))
-root.attributes("-fullscreen", fullscreen)
 
 menubar = Menu(root)
 root.config(menu=menubar)
@@ -71,15 +73,15 @@ root.config(menu=menubar)
 filemenu = Menu(menubar, tearoff=0)
 aboutmenu = Menu(menubar, tearoff=0)
 
-menubar.add_cascade(label='File', menu=filemenu)
-menubar.add_cascade(label='About', menu=aboutmenu) #menu=aboutmenu
+menubar.add_cascade(label='File', menu=filemenu, font=menu_font)
+menubar.add_cascade(label='About', menu=aboutmenu, font=menu_font) #menu=aboutmenu
 
-filemenu.add_command(label='GPIO Pins', command=stopGPIOPins)
-filemenu.add_command(label='Shutdown', command=onShutdown)
-filemenu.add_command(label='Exit', command=onExit)
+filemenu.add_command(label='GPIO Pins', command=stopGPIOPins, font=menu_font)
+filemenu.add_command(label='Shutdown', command=onShutdown, font=menu_font)
+filemenu.add_command(label='Exit', command=onExit, font=menu_font)
 #aboutmenu.add_command(label='About', command=aboutInfo)
-aboutmenu.add_command(label='About', command=aboutInfo)
-aboutmenu.add_command(label='App Update', command=update)
+aboutmenu.add_command(label='About', command=aboutInfo, font=menu_font)
+aboutmenu.add_command(label='App Update', command=update, font=menu_font)
 
 ## Logo Image
 logo_image = PhotoImage(file="Belden_PPC_logo-standard.png").subsample(10, 10)
