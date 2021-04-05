@@ -104,13 +104,14 @@ menubar.add_cascade(label='About', menu=aboutmenu, font=menu_font) #menu=aboutme
 
 filemenu.add_command(label='GPIO Pins', command=stopGPIOPins, font=menu_font)
 filemenu.add_command(label='Shutdown', command=onShutdown, font=menu_font)
-filemenu.add_command(label='Exit', command=onExit, font=menu_font)
+filemenu.add_command(label='Exit Application', command=onExit, font=menu_font)
 #aboutmenu.add_command(label='About', command=aboutInfo)
 aboutmenu.add_command(label='About', command=aboutInfo, font=menu_font)
 aboutmenu.add_command(label='App Update', command=update, font=menu_font)
 
 ## Logo Image
 logo_image = PhotoImage(file="Belden_PPC_logo-standard.png").subsample(10, 10)
+RPi_image_small = PhotoImage(file="RPi.png").subsample(10, 10)
 
 # create the main containers
 top_frame = Frame(root, bg='white', width=root.winfo_reqwidth() - 10, height=header_height, padx=5, pady=5)
