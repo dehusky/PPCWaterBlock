@@ -111,7 +111,7 @@ aboutmenu.add_command(label='App Update', command=update, font=menu_font)
 
 ## Logo Image
 logo_image = PhotoImage(file="Belden_PPC_logo-standard.png").subsample(10, 10)
-RPi_image_small = PhotoImage(file="RPi.png").subsample(10, 10)
+# RPi_image_small = PhotoImage(file="RPi.png").subsample(10, 10)
 
 # create the main containers
 top_frame = Frame(root, bg='white', width=root.winfo_reqwidth() - 10, height=header_height, padx=5, pady=5)
