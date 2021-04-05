@@ -7,9 +7,9 @@ import RPi.GPIO as GPIO
 
 from WaterBlockTest_aStopWatchFrame import *
 
-versionNumber = "1.02"
+versionNumber = "1.03"
 
-fullscreen = False
+fullscreen = True
 lbl_bg_color = 'yellow'
 lbl_txt_color = 'blue'
 toggle_btn_color_stopped = 'green'
