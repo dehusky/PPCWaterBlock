@@ -9,6 +9,7 @@ if test -f "$FILE"; then
     echo "$FILE exists."
 else
     sudo cp /opt/PPCWaterBlock/WaterBlockTimer /home/pi/Desktop/
+    echo "$FILE added to desktop."
 fi
 
 sh run.sh
