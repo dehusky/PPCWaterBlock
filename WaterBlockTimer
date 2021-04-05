@@ -4,4 +4,5 @@ Path=/opt/PPCWaterBlock
 Exec=run.sh %F
 Icon=/opt/PPCWaterBlock/Belden_PPC_logo-standard.png
 Type=Application
+Terminal=false
 Comment[en_GB]=Run
