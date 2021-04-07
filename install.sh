@@ -1,16 +1,16 @@
 #!/bin/sh
 
-if [ ! -d "/opt/PPC_WB_Tester" ]
+if [ ! -d "/opt/PPCWaterBlock" ]
 then
-   sudo mkdir /opt/PPC_WB_Tester
+   sudo mkdir /opt/PPCWaterBlock
    echo "Directory created"
 else
    echo "Directory exists, updating files..." 
 fi
 
 # copy all files from installation directory to local directory
-cp -avr * /opt/PPC_WB_Tester >> /tmp/PPC_WB_Tester_1.log 2>&1
-echo "Files copied to /opt/PPC_WB_Tester"
+cp -avr * /opt/PPCWaterBlock >> /tmp/PPC_WB_Tester_1.log 2>&1
+echo "Files copied to /opt/PPCWaterBlock"
 
 # copy run.sh
 cp run.sh /usr/local/bin/run.sh >> /tmp/PPC_WB_Tester_2.log 2>&1
@@ -25,6 +25,6 @@ then
    echo "run.sh found in /lxsession/autostart"
 else
    # echo "lxsession/autostart checked, run.sh not found, adding now..."
-   echo "@/opt/PPC_WB_Tester/run.sh" >> /etc/xdg/lxsession/LXDE-pi/autostart
+   echo "@/opt/PPCWaterBlock/run.sh" >> /etc/xdg/lxsession/LXDE-pi/autostart
    echo "added run.sh routine to lxsession/autostart"
 fi
